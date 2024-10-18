@@ -113,7 +113,8 @@ public class InProgressGradesExport extends PanoramaExportBase {
                 //if (termCalculator == null) {
                  TermAverageCalculator termCalculator = (TermAverageCalculator) calculatorFactory.getTermAverageCalculator(
                             term,
-                            Arrays.asList(studentSchedule.getStudent()) // Pass only the current student
+                            //Arrays.asList(studentSchedule.getStudent()) // Pass only the current student
+                            m_students // Pass all students                            
                     );
                   //  m_termCalculators.put(termKey, termCalculator);
                 //}
@@ -125,7 +126,6 @@ public class InProgressGradesExport extends PanoramaExportBase {
                     // Format the numeric grade according to your scale
                     DecimalFormat df = new DecimalFormat("0.##");
                     String grade = df.format(numericGrade);
-
                     grid.append();
                     setGradeInformation(grid, studentSchedule, term, grade);
                 }
