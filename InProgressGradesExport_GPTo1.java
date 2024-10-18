@@ -67,19 +67,25 @@ public class InProgressGradesExport extends PanoramaExportBase {
 
         QueryByCriteria query = new QueryByCriteria(StudentSchedule.class, criteria);
         query.addOrderByAscending(StudentSchedule.REL_STUDENT + "." + Student.COL_LOCAL_ID);
-        query.addOrderByAscending(StudentSchedule.REL_SECTION + "." + Section.COL_COURSE_VIEW);
-        /*
-         * Temporarily limit query
-         */
-    
-        /* Original loop code for all students */
+        query.addOrderByAscending(StudentSchedule.REL_SECTION + "." + Section.COL_COURSE_VIEW);        
         
         QueryIterator<StudentSchedule> iterator = getBroker().getIteratorByQuery(query);
         try {
             while (iterator.hasNext()) {
                 StudentSchedule studentSchedule = iterator.next();
-                appendGradeInformation(grid, studentSchedule);
+                try {
+                    appendGradeInformation(grid, studentSchedule);
+                } catch (Exception e) {
+                    // Log the exception and continue with the next student
+                    System.err.println(
+                            "Error processing student OID " + studentSchedule.getStudentOid() + ": " + e.getMessage());
+                    e.printStackTrace();
+                }
             }
+        } catch (Exception e) {
+            // Log any exceptions that occur outside of the per-iteration try-catch
+            System.err.println("Error in loadGrid method: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             iterator.close();
         }
@@ -100,17 +106,17 @@ public class InProgressGradesExport extends PanoramaExportBase {
         for (GradeTerm term : terms) {
             if (term != null) {
                 // Generate a unique key for the calculator
-                String termKey = getCalculatorKey(section, term.getOid() + studentSchedule.getStudentOid());
+                //String termKey = getCalculatorKey(section, term.getOid() + studentSchedule.getStudentOid());
 
                 // Retrieve or create a calculator for this student and term
-                TermAverageCalculator termCalculator = m_termCalculators.get(termKey);
-                if (termCalculator == null) {
-                    termCalculator = (TermAverageCalculator) calculatorFactory.getTermAverageCalculator(
+                //TermAverageCalculator termCalculator = m_termCalculators.get(termKey);
+                //if (termCalculator == null) {
+                 TermAverageCalculator termCalculator = (TermAverageCalculator) calculatorFactory.getTermAverageCalculator(
                             term,
                             Arrays.asList(studentSchedule.getStudent()) // Pass only the current student
                     );
-                    m_termCalculators.put(termKey, termCalculator);
-                }
+                  //  m_termCalculators.put(termKey, termCalculator);
+                //}
 
                 // Use getAverageNumeric to get the numeric grade                
                 
