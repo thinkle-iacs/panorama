@@ -92,6 +92,8 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
   private static final String GRID_SIZE = "setSize";
   private static final String GRID_STUDENT = "student";
   private static final String GRID_TEACHER = "teacher";
+  private static final String GRID_SECTION_ID = "sectionId";
+  private static final String GRID_STANDARD_ID = "standardId";
 
   /**
    * User inputs
@@ -174,6 +176,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
               grid.set(GRID_SECTION, section);
               grid.set(GRID_CATEGORY, kvPair.getKey());
               grid.set(GRID_TEACHER, section.getStaffView());
+              grid.set(GRID_SECTION_ID, section.getOid());
 
               String raw = (String) kvPair.getValue();
               Double numberGrade = Double.valueOf(raw.substring(0, raw.indexOf('_')));
