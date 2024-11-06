@@ -555,7 +555,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
         Iterator categoryIterator = categories.iterator();
         while (categoryIterator.hasNext()) {
           GradebookColumnType category = (GradebookColumnType) categoryIterator.next();
-          String catType = category.getColumnType();
+          String catType = category.getColumnTypeDescription();
 
           CategoryAverageCalculator categoryCalculator = null;
 
