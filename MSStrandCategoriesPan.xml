@@ -46,105 +46,35 @@ very large pageHeight above -->
 	<variable name="date" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[$P{longDateFormat}.format(new java.util.Date(System.currentTimeMillis()))]]></variableExpression>
 	</variable>
-  <!--
-	<group name="sort">
-		<groupExpression><![CDATA[$F{break}]]></groupExpression>
-		<groupHeader>
-			<band/>
-		</groupHeader>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
-	<group name="separate" isStartNewPage="true">
-		<groupExpression><![CDATA[$F{separate}]]></groupExpression>
-		<groupHeader>
-			<band/>
-		</groupHeader>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
-	<group name="student">
-		<groupExpression><![CDATA[$F{student}]]></groupExpression>
-		<groupHeader>
-			<band height="6">
-				<printWhenExpression><![CDATA[$F{setSize}.intValue() > 1]]></printWhenExpression>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="6">
-				<printWhenExpression><![CDATA[$F{setSize}.intValue() > 1]]></printWhenExpression>
-			</band>
-		</groupFooter>
-	</group>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title> -->
-  <!--
-	<pageHeader>
-		<band height="52" splitType="Stretch">
-      <textField>
-        <reportElement x="0" y="0" height="14" width="50" />
-        <textFieldExpression><![CDATA["standards_based_grade_id"]]></textFieldExpression>
-      </textField>
-      <textField>
-        <reportElement x="50" y="0" height="14" width="100" />
-        <textFieldExpression><![CDATA["standard_id"]]></textFieldExpression>
-      </textField>
-      <textField>
-        <reportElement x="150" y="0" height="14" width="50" />
-        <textFieldExpression><![CDATA["section_id"]]></textFieldExpression>
-      </textField>
-      <textField>
-        <reportElement x="200" y="0" height="14" width="50" />
-        <textFieldExpression><![CDATA["student_id"]]></textFieldExpression>
-      </textField>
-      <textField>
-        <reportElement x="250" y="0" height="14" width="50" />
-        <textFieldExpression><![CDATA["grade"]]></textFieldExpression>
-      </textField>
-      <textField>
-        <reportElement x="300" y="0" height="14" width="50" />
-        <textFieldExpression><![CDATA["grade_slot"]]></textFieldExpression>
-      </textField>
-      <textField>
-        <reportElement x="350" y="0" height="14" width="100" />
-        <textFieldExpression><![CDATA["School ID"]]></textFieldExpression>
-      </textField>
-		</band>
-	</pageHeader>  -->
+  
 	<columnHeader>
 		<band splitType="Stretch" height="24">
       <textField>
-        <reportElement x="0" y="0" height="14" width="250" />
+        <reportElement x="0" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["standards_based_grade_id"]]></textFieldExpression>
       </textField>
       <textField>
-        <reportElement x="50" y="0" height="14" width="100" />
+        <reportElement x="200" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["standard_id"]]></textFieldExpression>
       </textField>
       <textField>
-        <reportElement x="150" y="0" height="14" width="50" />
+        <reportElement x="400" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["section_id"]]></textFieldExpression>
       </textField>
       <textField>
-        <reportElement x="200" y="0" height="14" width="50" />
+        <reportElement x="600" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["student_id"]]></textFieldExpression>
       </textField>
       <textField>
-        <reportElement x="250" y="0" height="14" width="50" />
+        <reportElement x="800" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["grade"]]></textFieldExpression>
       </textField>
       <textField>
-        <reportElement x="300" y="0" height="14" width="50" />
+        <reportElement x="1000" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["grade_slot"]]></textFieldExpression>
       </textField>
       <textField>
-        <reportElement x="350" y="0" height="14" width="100" />
+        <reportElement x="1200" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA["School ID"]]></textFieldExpression>
       </textField>
 
@@ -153,54 +83,44 @@ very large pageHeight above -->
 	<detail>
 		<band height="14" splitType="Stretch">
       <textField> <!-- standards_based_grade_id -->
-        <reportElement x="0" y="0" height="14" width="250" />
+        <reportElement x="0" y="0" height="14" width="200" />
         <textFieldExpression><![CDATA[$F{sbgid}]]></textFieldExpression>
       </textField>    
       <!-- standard_id -->
       <textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">      
-				<reportElement x="50" y="0" width="100" height="14" key="textField-15" stretchType="RelativeToBandHeight" mode="Transparent"  forecolor="#000000" backcolor="#FFFFFF" uuid="6a303871-7e2b-4d7e-bf84-321ad4f647e8"/>								
+				<reportElement x="200" y="0" width="100" height="14" key="textField-15" stretchType="RelativeToBandHeight" mode="Transparent"  forecolor="#000000" backcolor="#FFFFFF" uuid="6a303871-7e2b-4d7e-bf84-321ad4f647e8"/>								
 				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
 			</textField>
       <!-- section_id -->
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="150" y="0" width="50" height="14" 
+				<reportElement x="400" y="0" width="50" height="14" 
         key="textField-12" stretchType="RelativeToBandHeight" mode="Transparent"  forecolor="#000000" backcolor="#FFFFFF" uuid="047058fe-0ec8-425f-80f7-d022cf3f0c7b"/>						
 				<textFieldExpression><![CDATA[String.valueOf($F{section}.getOid())]]></textFieldExpression>
 			</textField>
       <!-- student_id -->
       <textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement  x="200" y="0" width="50" height="14" key="textField-13" stretchType="RelativeToBandHeight" mode="Transparent" forecolor="#000000" backcolor="#FFFFFF" uuid="1289a9b7-992a-4719-84f4-e71795641794"/>								
+				<reportElement  x="600" y="0" width="50" height="14" key="textField-13" stretchType="RelativeToBandHeight" mode="Transparent" forecolor="#000000" backcolor="#FFFFFF" uuid="1289a9b7-992a-4719-84f4-e71795641794"/>								
 				<textFieldExpression><![CDATA[$F{student}.getLocalId()]]></textFieldExpression>
 			</textField>			
       <!-- marking_period_id -->
       
       <!-- grade -->      			
       <textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement x="250" y="0" width="50" height="14" key="textField-15" stretchType="RelativeToBandHeight" mode="Transparent"  forecolor="#000000" backcolor="#FFFFFF" uuid="10ac8e8d-003c-4dc0-846d-e84373d4b3a6"/>							
+				<reportElement x="800" y="0" width="50" height="14" key="textField-15" stretchType="RelativeToBandHeight" mode="Transparent"  forecolor="#000000" backcolor="#FFFFFF" uuid="10ac8e8d-003c-4dc0-846d-e84373d4b3a6"/>							
 				<textFieldExpression><![CDATA[$P{gradeTerm}.getGradeTermNum() == 1 ? $F{1} :
 $P{gradeTerm}.getGradeTermNum() == 2 ? $F{2} : null]]></textFieldExpression>
 			</textField>
       <!-- grade_slot -->
       <textField>
-        <reportElement x="300" y="0" height="14" width="50" />
+        <reportElement x="1000" y="0" height="14" width="50" />
         <textFieldExpression><![CDATA[$P{gradeTerm}.getGradeTermNum()]]></textFieldExpression>
       </textField>
       <!-- School ID -->
       <textField >
-        <reportElement x="350" y="0" height="14" width="100"/>
+        <reportElement x="1200" y="0" height="14" width="100"/>
         <textFieldExpression><![CDATA[$P{school}.getOid()]]></textFieldExpression>
       </textField>
-      <!--
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-14" stretchType="RelativeToBandHeight" mode="Transparent" x="294" y="0" width="134" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="daa626c5-0c3c-4810-a469-a6603e3e4134"/>							
-				<textFieldExpression><![CDATA[$F{section}.getDescription()]]></textFieldExpression>
-			</textField>
-			
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement key="textField-15" stretchType="RelativeToBandHeight" mode="Transparent" x="640" y="0" width="106" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="528ed4ed-5115-46d5-bf7e-582caf1e6e45"/>							
-				<textFieldExpression><![CDATA[$F{teacher}]]></textFieldExpression>
-			</textField>
-      -->
+      
 		</band>
 	</detail>
 </jasperReport>
