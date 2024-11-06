@@ -50,6 +50,7 @@ import java.util.logging.Level;
 import net.sf.jasperreports.engine.JRDataSource;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
+import com.x2dev.sis.model.beans.RubricDefinition;
 
 /**
  * Data source for the "Danger of Failing" report.
@@ -156,6 +157,20 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
         StudentSchedule studentSchedule = (StudentSchedule) studentSchedules.next();
         Section section = studentSchedule.getSection();
         SisStudent student = studentSchedule.getStudent();
+        // Find rubric definition
+        
+        RubricDefinition rubricDefinition = section.getSchoolCourse().getRubricDefinition();
+        // Build a map of criteria by name
+        Map<String, RubricCriterion> criteriaByName = new HashMap<>();
+
+        if (rubricDefinition != null) {
+          Collection<RubricCriterion> criteria = rubricDefinition.getRubricCriteria(getBroker());
+          for (RubricCriterion criterion : criteria) {
+            criteriaByName.put(criterion.getColumnHeader(), criterion);
+          }
+        } else {
+          logToolMessage(Level.WARNING, "No RubricDefinition found for section: " + section.getDescription(), false);          
+        }
 
         if (!StringUtils.isEmpty(section.getDescription()) &&
             !section.getDescription().contains(HOMEROOM_KEY)
@@ -170,11 +185,19 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
             int counter = 0;
             for (Object object : atRiskCategories) {
               KeyValuePair kvPair = (KeyValuePair) object;
-
+              logToolMessage(Level.INFO, "kvPair Key (Category): " + kvPair.getKey(), false);
+              String categoryKey = (String) kvPair.getKey();
+              RubricCriterion criterion = criteriaByName.get(categoryKey);
+              String rubricKey = categoryKey;
+              if (criterion == null) {
+                logToolMessage(Level.WARNING, "No RubricCriterion found for category: " + categoryKey, false);                
+              } else {
+                rubricKey = criterion.getOid();
+              }
               grid.append();
               grid.set(GRID_STUDENT, student);
               grid.set(GRID_SECTION, section);
-              grid.set(GRID_CATEGORY, kvPair.getKey());
+              grid.set(GRID_CATEGORY, rubricKey);
               grid.set(GRID_TEACHER, section.getStaffView());
               grid.set(GRID_SECTION_ID, section.getOid());
 
