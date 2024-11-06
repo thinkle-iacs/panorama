@@ -35,6 +35,7 @@ very large pageHeight above -->
 	<field name="3" class="java.lang.Double"/>
 	<field name="4" class="java.lang.Double"/>
 	<field name="category" class="java.lang.String"/>
+	<field name="sbgid" class="java.lang.String"/>
 	<field name="CourseAvg" class="java.lang.Double"/>
 	<field name="itemCount" class="java.lang.Integer"/>
 	<field name="setSize" class="java.lang.Integer"/>
@@ -119,7 +120,7 @@ very large pageHeight above -->
 	<columnHeader>
 		<band splitType="Stretch" height="24">
       <textField>
-        <reportElement x="0" y="0" height="14" width="50" />
+        <reportElement x="0" y="0" height="14" width="250" />
         <textFieldExpression><![CDATA["standards_based_grade_id"]]></textFieldExpression>
       </textField>
       <textField>
@@ -152,8 +153,8 @@ very large pageHeight above -->
 	<detail>
 		<band height="14" splitType="Stretch">
       <textField> <!-- standards_based_grade_id -->
-        <reportElement x="0" y="0" height="14" width="50" />
-        <textFieldExpression><![CDATA["SBGID"]]></textFieldExpression>
+        <reportElement x="0" y="0" height="14" width="250" />
+        <textFieldExpression><![CDATA[$F{sbgid}]]></textFieldExpression>
       </textField>    
       <!-- standard_id -->
       <textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">      
