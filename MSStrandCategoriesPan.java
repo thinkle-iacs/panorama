@@ -37,6 +37,8 @@ import com.x2dev.sis.model.business.gradebook.TermAverageCalculator;
 import com.x2dev.utils.CollectionUtils;
 import com.x2dev.utils.KeyValuePair;
 import com.x2dev.utils.StringUtils;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -94,7 +96,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
   private static final String GRID_STUDENT = "student";
   private static final String GRID_TEACHER = "teacher";
   private static final String GRID_SECTION_ID = "sectionId";
-  private static final String GRID_STANDARD_ID = "standardId";
+  private static final String GRID_SBGID = "sbgid";
 
   /**
    * User inputs
@@ -131,6 +133,34 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
   private Criteria m_studentScheduleCriteria;
   private Map<String, CategoryAverageCalculator> m_categoryCalculators;
   private Map<String, Map<String, Collection<GradebookColumnType>>> m_categories;
+
+  /**
+   * Generates a unique SBGID using the current day of the year, student ID, section ID, and rubric criterion ID.
+   *
+   * @param student The SisStudent object
+   * @param section The Section object
+   * @param rubricKey The rubric criterion ID as a String
+   * @return A unique standards-based grade ID (SBGID) as a String
+   */
+  private String generateSBGId(SisStudent student, Section section, String rubricKey) {
+    int dayOfYear = LocalDate.now().getDayOfYear();
+    
+    // Check if each value is non-null and log for debugging
+    String sectionOid = section.getOid() != null ? section.getOid() : "missingSectionOid";
+    String studentId = student.getLocalId() != null ? student.getLocalId() : "missingStudentId";
+    String rubricId = rubricKey != null ? rubricKey : "missingRubricKey";
+    
+    // Log each part to verify
+    logToolMessage(Level.INFO, "Generating SBGID with dayOfYear: " + dayOfYear 
+                              + ", sectionOid: " + sectionOid 
+                              + ", studentId: " + studentId 
+                              + ", rubricId: " + rubricId, false);
+
+    String sbgId = dayOfYear + "_" + sectionOid + "_" + studentId + "_" + rubricId;
+    return sbgId;
+
+  }
+  
 
   /**
    * @see com.x2dev.sis.tools.reports.ReportJavaSourceDori#gatherData()
@@ -194,12 +224,14 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
               } else {
                 rubricKey = criterion.getOid();
               }
+             
               grid.append();
               grid.set(GRID_STUDENT, student);
               grid.set(GRID_SECTION, section);
               grid.set(GRID_CATEGORY, rubricKey);
               grid.set(GRID_TEACHER, section.getStaffView());
-              grid.set(GRID_SECTION_ID, section.getOid());
+              grid.set(GRID_SECTION_ID, section.getOid());              
+              grid.set(GRID_SBGID, generateSBGId(student, section, rubricKey));
 
               String raw = (String) kvPair.getValue();
               Double numberGrade = Double.valueOf(raw.substring(0, raw.indexOf('_')));
