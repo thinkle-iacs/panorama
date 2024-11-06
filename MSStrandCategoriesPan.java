@@ -109,10 +109,10 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
   private static final String INPUT_HIDDEN_ASSIGNMENTS = "hiddenAssignments";
   private static final String INPUT_QUERY_BY = "queryBy";
   private static final String INPUT_QUERY_STRING = "queryString";
-  private static final String INPUT_SCHEDULE_SORT = "scheduleSort";
-  private static final String INPUT_STUDENT_SORT = "studentSort";
-  private static final String INPUT_TEACHER_NAME = "teacher";
-  private static final String INPUT_THRESHOLD = "threshold";
+  //private static final String INPUT_SCHEDULE_SORT = "scheduleSort";
+  //private static final String INPUT_STUDENT_SORT = "studentSort";
+  //private static final String INPUT_TEACHER_NAME = "teacher";
+  //private static final String INPUT_THRESHOLD = "threshold";
 
   // Output parameters
   private static final String GRADE_TERM = "gradeTerm";
@@ -175,9 +175,9 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
     ReportDataGrid grid = new ReportDataGrid(100, 10);
 
     QueryByCriteria query = new QueryByCriteria(StudentSchedule.class, m_studentScheduleCriteria);
-    applySortOrder(query);
+    //applySortOrder(query);
 
-    int studentSort = ((Integer) getParameter(INPUT_STUDENT_SORT)).intValue();
+    //int studentSort = ((Integer) getParameter(INPUT_STUDENT_SORT)).intValue();
 
     loadStudents();
 
@@ -205,15 +205,15 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
         if (!StringUtils.isEmpty(section.getDescription()) &&
             !section.getDescription().contains(HOMEROOM_KEY)
             && !section.getDescription().contains(LUNCH_KEY)) {
-          Set atRiskCategories = getAtRiskCategories(section, student.getOid());
+          Set allCategories = getAllCategories(section, student.getOid());
 
           // logToolMessage(Level.INFO, "Course: " + section.getCourseView() + "-" +
           // section.getDescription() , false);
           // logToolMessage(Level.INFO, "atRiskCategories: " + atRiskCategories, false);
 
-          if (!atRiskCategories.isEmpty()) {
+          if (!allCategories.isEmpty()) {
             int counter = 0;
-            for (Object object : atRiskCategories) {
+            for (Object object : allCategories) {
               KeyValuePair kvPair = (KeyValuePair) object;
               logToolMessage(Level.INFO, "kvPair Key (Category): " + kvPair.getKey(), false);
               String categoryKey = (String) kvPair.getKey();
@@ -248,7 +248,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
               /*
                * Size is being used as a spacer in iReport
                */
-              grid.set(GRID_SIZE, Integer.valueOf(atRiskCategories.size()));
+              grid.set(GRID_SIZE, Integer.valueOf(allCategories.size()));
 
               // logToolMessage(Level.INFO, "Grid : " + grid, false);
 
@@ -312,13 +312,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
     buildCriteria();
     loadGradebookCategories();
 
-    try {
-      m_threshold = Double.valueOf(Double.parseDouble((String) getParameter(INPUT_THRESHOLD)));
-    } catch (NumberFormatException nfe) {
-      m_threshold = Double.valueOf(0.0);
-      logToolMessage(Level.SEVERE, FORMAT_ERROR
-          + nfe.getMessage(), false);
-    }
+    
   }
 
   /**
@@ -340,7 +334,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
    * @param query
    */
   private void applySortOrder(QueryByCriteria query) {
-    int studentSort = ((Integer) getParameter(INPUT_STUDENT_SORT)).intValue();
+    //int studentSort = ((Integer) getParameter(INPUT_STUDENT_SORT)).intValue();
     /* who cares about sorting - plus this broke stuff */
     /*
      * switch (studentSort) {
@@ -583,7 +577,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
    *
    * @return Set<KeyValuePair<String,String>> atRiskList Set
    */
-  private Set<KeyValuePair<String, String>> getAtRiskCategories(Section section, String studentOid) {
+  private Set<KeyValuePair<String, String>> getAllCategories(Section section, String studentOid) {
     String stfOid = section.getPrimaryStaffOid();
     Map<String, Collection<GradebookColumnType>> staffCategories = m_categories.get(stfOid);
 
@@ -591,7 +585,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
     // "-" + section.getDescription() +
     // "/" + section.getPrimaryStaffOid() + " : " + staffCategories, false);
 
-    Set<KeyValuePair<String, String>> atRiskSet = new HashSet<KeyValuePair<String, String>>();
+    Set<KeyValuePair<String, String>> allGradesSet = new HashSet<KeyValuePair<String, String>>();
 
     if (staffCategories != null) {
       Collection<GradebookColumnType> categories = staffCategories.get(section.getOid());
@@ -629,18 +623,9 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
           String letterGrade = categoryCalculator.getAverageLetter(studentOid);
           String numberAndLetter = avgNumeric + "_" + letterGrade;
 
-          // logToolMessage(Level.INFO, section.getOid() + " | " + category + " | " +
-          // studentOid + letterGrade + "/" + avgNumeric, false);
-          /*
-           * If a category has a null average, set the return value to 100 to
-           * keep it from being considered.
-           */
-          int returnValue = (avgNumeric != null) ? Double.compare(avgNumeric.doubleValue(),
-              m_threshold.doubleValue()) : 100;
-
-          if (avgNumeric != null && returnValue <= 0) {
+          if (avgNumeric != null) {
             KeyValuePair<String, String> kvPair = new KeyValuePair(catType, numberAndLetter);
-            atRiskSet.add(kvPair);
+            allGradesSet.add(kvPair);
           }
         }
       }
@@ -648,7 +633,7 @@ public class MSStrandCategoriesPan extends ReportJavaSourceNet {
 
     // logToolMessage(Level.INFO, "atRiskSet : " + atRiskSet, false);
 
-    return atRiskSet;
+    return allGradesSet;
   }
 
   /**
