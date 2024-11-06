@@ -45,6 +45,7 @@ import com.x2dev.sis.model.beans.Schedule;
 import com.x2dev.sis.model.beans.SchoolScheduleContext;
 import com.x2dev.sis.model.beans.Section;
 import com.x2dev.sis.model.beans.SisPreferenceConstants;
+import com.x2dev.sis.model.beans.SisStaff;
 import com.x2dev.sis.model.beans.SisStudent;
 import com.x2dev.sis.model.beans.SisUser;
 import com.x2dev.sis.model.beans.StudentSchedule;

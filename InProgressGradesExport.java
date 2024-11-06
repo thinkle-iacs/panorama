@@ -1,3 +1,11 @@
+/**
+ * This file makes minimal changes to yours and outputs grades
+ * with a number and a letter, like:
+ * 
+ * "3.1 B-"
+ * 
+ */
+
 package aspen.exports.panorama;
 
 import java.util.ArrayList;
@@ -93,13 +101,9 @@ public class InProgressGradesExport extends PanoramaExportBase {
         for (GradeTerm term : terms) {
             if (term != null) {
                 String termKey = getCalculatorKey(section, term.getOid());
-
-                TermAverageCalculator termCalculator = m_termCalculators.get(termKey);
-                if (termCalculator == null) {
-                    termCalculator = (TermAverageCalculator) calculatorFactory.getTermAverageCalculator(term,
-                            m_students);
-                    m_termCalculators.put(termKey, termCalculator);
-                }
+                
+                TermAverageCalculator termCalculator = (TermAverageCalculator) calculatorFactory.getTermAverageCalculator(term,
+                            m_students);                                    
 
                 String grade = termCalculator.getAverageView(studentSchedule.getStudentOid());
                 if (!StringUtils.isEmpty(grade)) {
@@ -156,12 +160,12 @@ public class InProgressGradesExport extends PanoramaExportBase {
         AverageCalculatorFactory calculatorFactory = new AverageCalculatorFactory((MasterSchedule) section,
                 decimals,
                 m_gradesManager,
-                null,
+                gradeScale, // use grade scale
                 averageMode,
                 false,
                 new ArrayList<SectionReportingStandard>(),
-                getBroker(),
-                false,
+                getBroker(),                
+                true, // include grade
                 null,
                 null);
 

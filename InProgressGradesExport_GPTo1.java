@@ -1,3 +1,9 @@
+/**
+ * This file succesfully outputs grades with a number in our 4 point scale,
+ * which is I think what you're looking for -- the grade is in quotation
+ * marks in the CSV, but is just a number on our 4 point scale.
+ */
+
 package aspen.exports.panorama;
 
 import java.util.ArrayList;
@@ -112,8 +118,7 @@ public class InProgressGradesExport extends PanoramaExportBase {
                 //TermAverageCalculator termCalculator = m_termCalculators.get(termKey);
                 //if (termCalculator == null) {
                  TermAverageCalculator termCalculator = (TermAverageCalculator) calculatorFactory.getTermAverageCalculator(
-                            term,
-                            //Arrays.asList(studentSchedule.getStudent()) // Pass only the current student
+                            term,                            
                             m_students // Pass all students                            
                     );
                   //  m_termCalculators.put(termKey, termCalculator);
